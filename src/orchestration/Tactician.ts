@@ -1,4 +1,4 @@
-import { BrainService, BrainResponse } from '../services/BrainService';
+import { BrainService, BrainResponse } from '../services/BrainService.js';
 
 /**
  * Tactician: The JKD Combat Algorithm

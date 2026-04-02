@@ -1,7 +1,7 @@
-import { ForensicAnalyst } from '../services/ForensicAnalyst';
-import { Tactician } from './Tactician';
-import { Alchemist } from './Alchemist';
-import { BrainResponse } from '../services/BrainService';
+import { ForensicAnalyst } from '../services/ForensicAnalyst.js';
+import { Tactician } from './Tactician.js';
+import { Alchemist } from './Alchemist.js';
+import { BrainResponse } from '../services/BrainService.js';
 
 export interface ResearchInsight {
   topic: string;

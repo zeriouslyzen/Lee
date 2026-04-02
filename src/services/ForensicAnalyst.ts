@@ -1,4 +1,4 @@
-import { BrainService, BrainResponse } from './BrainService';
+import { BrainService, BrainResponse } from './BrainService.js';
 
 export class ForensicAnalyst {
   private brain: BrainService;

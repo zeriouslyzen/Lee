@@ -1,14 +1,14 @@
-import { Coordinator } from './Coordinator';
-import { Adversary } from './Adversary';
-import { PersonaAgent } from '../services/PersonaAgent';
-import { AppState } from './AppState';
-import { ThinkingConfig } from './ThinkingConfig';
-import { HistoryManager } from './HistoryManager';
-import { PasteStore } from './PasteStore';
-import { SkillRegistry } from './SkillRegistry';
-import { CostTracker } from './CostTracker';
-import { DirectivesService } from '../services/Directives';
-import { KnowledgeService } from '../services/KnowledgeService';
+import { Coordinator } from './Coordinator.js';
+import { Adversary } from './Adversary.js';
+import { PersonaAgent } from '../services/PersonaAgent.js';
+import { AppState } from './AppState.js';
+import { ThinkingConfig } from './ThinkingConfig.js';
+import { HistoryManager } from './HistoryManager.js';
+import { PasteStore } from './PasteStore.js';
+import { SkillRegistry } from './SkillRegistry.js';
+import { CostTracker } from './CostTracker.js';
+import { DirectivesService } from '../services/Directives.js';
+import { KnowledgeService } from '../services/KnowledgeService.js';
 import path from 'node:path';
 
 export interface Pulse {
