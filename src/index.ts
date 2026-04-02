@@ -53,12 +53,13 @@ app.post('/bruce/dream', async (c) => {
   }
 });
 
-serve({
-  fetch: app.fetch,
-  port: 3000,
-});
+// Conditional Launch: Serve locally, Handle on Vercel
+if (process.env.NODE_ENV !== 'production') {
+  serve({
+    fetch: app.fetch,
+    port: 3000,
+  });
+  console.log('--- 🐉 MASTER HALL LIVE ON LOCALHOST:3000 ---');
+}
 
-export default {
-  port: 3000,
-  fetch: app.fetch,
-};
+export default app;
