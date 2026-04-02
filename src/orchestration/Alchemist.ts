@@ -1,14 +1,14 @@
-import { OllamaService } from '../services/OllamaService.js';
+import { BrainService } from '../services/BrainService.ts';
 
 /**
  * Alchemist: TCM & Recovery Specialist
  * Purpose: To map user physical state to Traditional Chinese Medicine and Bruce Lee's nutritional protocols.
  */
 export class Alchemist {
-  private ollama: OllamaService;
+  private brain: BrainService;
 
   constructor() {
-    this.ollama = new OllamaService();
+    this.brain = new BrainService();
   }
 
   async analyze(userPrompt: string, clinicalContext: string): Promise<string> {
@@ -27,7 +27,7 @@ export class Alchemist {
     YOUR VOICE: Clinical, metaphysical, and healing-focused.
     `;
 
-    const response = await this.ollama.chat([
+    const response = await this.brain.chat([
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt }
     ], 'hermes3:8b');

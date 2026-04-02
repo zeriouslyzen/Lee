@@ -1,15 +1,15 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { OllamaService } from './OllamaService.ts';
+import { BrainService } from './BrainService.ts';
 import { MemoryService } from './MemoryService.ts';
 
 export class DreamTask {
-  private ollama: OllamaService;
+  private brain: BrainService;
   private memory: MemoryService;
   private dataDir: string;
 
   constructor(dataDir: string) {
-    this.ollama = new OllamaService();
+    this.brain = new BrainService();
     this.memory = new MemoryService(dataDir);
     this.dataDir = dataDir;
   }
@@ -43,7 +43,7 @@ Forensic Insight: {The distilled truth about the user's body/mind}
 Alignment: {The JKD/TCM principle involved}
 `;
 
-    const response = await this.ollama.chat([{ role: 'user', content: prompt }], 'hermes3:8b');
+    const response = await this.brain.chat([{ role: 'user', content: prompt }], 'hermes3:8b');
     const insight = response.message.content;
 
     // Append to BRUCE.md for the Kernel to hydrate in the next session

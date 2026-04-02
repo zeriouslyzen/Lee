@@ -1,14 +1,14 @@
-import { OllamaService } from '../services/OllamaService.js';
+import { BrainService } from '../services/BrainService.ts';
 
 /**
  * Tactician: The JKD Combat Algorithm
  * Purpose: To translate forensic data into immediate combat strategy.
  */
 export class Tactician {
-  private ollama: OllamaService;
+  private brain: BrainService;
 
   constructor() {
-    this.ollama = new OllamaService();
+    this.brain = new BrainService();
   }
 
   async analyze(userPrompt: string, clinicalContext: string): Promise<string> {
@@ -27,7 +27,7 @@ export class Tactician {
     YOUR VOICE: Direct, strategic, and martial.
     `;
 
-    const response = await this.ollama.chat([
+    const response = await this.brain.chat([
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt }
     ], 'hermes3:8b');

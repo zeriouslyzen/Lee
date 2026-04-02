@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Hono } from 'hono';
 import { DojoKernel } from './orchestration/DojoKernel.js';
 import { DreamTask } from './services/DreamTask.ts';

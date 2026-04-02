@@ -1,10 +1,10 @@
-import { OllamaService } from './OllamaService.ts';
+import { BrainService } from './BrainService.ts';
 
 export class PersonaAgent {
-  private ollama: OllamaService;
+  private brain: BrainService;
 
   constructor() {
-    this.ollama = new OllamaService();
+    this.brain = new BrainService();
   }
 
   async synthesis(userPrompt: string, forensicReport: string, archiveContext: string): Promise<string> {
@@ -36,7 +36,7 @@ export class PersonaAgent {
       { role: 'user', content: userPrompt }
     ];
 
-    const response = await this.ollama.chat(messages, 'hermes3:8b');
+    const response = await this.brain.chat(messages, 'hermes3:8b');
     return response.message.content;
   }
 }

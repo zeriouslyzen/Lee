@@ -1,14 +1,14 @@
-import { OllamaService } from '../services/OllamaService.js';
+import { BrainService } from '../services/BrainService.ts';
 
 /**
  * Adversary: The Skeptical Master (Inspired by Claude Code Verification Agent)
  * Purpose: To attack the proposed Master response and identify 'Persona Drift' or 'Clinical Weakness' before reaching the user.
  */
 export class Adversary {
-  private ollama: OllamaService;
+  private brain: BrainService;
 
   constructor() {
-    this.ollama = new OllamaService();
+    this.brain = new BrainService();
   }
 
   async verify(masterResponse: string, forensicTruth: string): Promise<{ passed: boolean; feedback: string; score: number }> {
@@ -31,7 +31,7 @@ export class Adversary {
     }
     `;
 
-    const response = await this.ollama.chat([
+    const response = await this.brain.chat([
       { role: 'system', content: systemPrompt },
       { role: 'user', content: `AUDIT THIS RESPONSE:\n${masterResponse}` }
     ], 'hermes3:8b');
