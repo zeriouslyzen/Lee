@@ -11,9 +11,20 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 const app = new Hono();
-const kernel = new DojoKernel();
-const DATA_DIR = path.join(process.cwd(), 'src/data');
-const dreamTask = new DreamTask(DATA_DIR);
+const DATA_DIR = path.resolve(process.cwd(), 'src/data');
+
+// Lazy Initialization Helpers
+let kernelInstance: DojoKernel | null = null;
+function getKernel() {
+  if (!kernelInstance) kernelInstance = new DojoKernel();
+  return kernelInstance;
+}
+
+let dreamTaskInstance: DreamTask | null = null;
+function getDreamTask() {
+  if (!dreamTaskInstance) dreamTaskInstance = new DreamTask(DATA_DIR);
+  return dreamTaskInstance;
+}
 
 // Vercel Serverless Exports
 export const GET = handle(app);
@@ -31,6 +42,7 @@ app.post('/v1/chat', async (c) => {
   try {
     const { messages, provider } = await c.req.json();
     const lastMessage = messages[messages.length - 1].content;
+    const kernel = getKernel();
     
     return streamText(c, async (stream) => {
       // 1. Brain Rerouting (Neural Pulse)
@@ -50,6 +62,7 @@ app.post('/v1/chat', async (c) => {
 // Bruce Lee Specific: Consolidation (Dream)
 app.post('/bruce/dream', async (c) => {
   try {
+    const dreamTask = getDreamTask();
     await dreamTask.runConsolidation();
     return c.json({ success: true, message: 'Bruce Lee is dreaming. Memory consolidated.' });
   } catch (error: any) {

@@ -2,7 +2,8 @@
   "version": 2,
   "functions": {
     "src/index.ts": {
-      "maxDuration": 25
+      "maxDuration": 25,
+      "includeFiles": "src/data/**"
     }
   },
   "routes": [
