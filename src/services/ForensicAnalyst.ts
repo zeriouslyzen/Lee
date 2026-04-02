@@ -1,4 +1,4 @@
-import { BrainService, BrainResponse } from './BrainService.ts';
+import { BrainService, BrainResponse } from './BrainService';
 
 export class ForensicAnalyst {
   private brain: BrainService;

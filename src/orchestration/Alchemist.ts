@@ -1,4 +1,4 @@
-import { BrainService, BrainResponse } from '../services/BrainService.ts';
+import { BrainService, BrainResponse } from '../services/BrainService';
 
 /**
  * Alchemist: TCM & Recovery Specialist

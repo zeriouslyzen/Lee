@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { Hono } from 'hono';
-import { DojoKernel } from './orchestration/DojoKernel.ts';
-import { DreamTask } from './services/DreamTask.ts';
+import { DojoKernel } from './orchestration/DojoKernel';
+import { DreamTask } from './services/DreamTask';
 import { serve } from '@hono/node-server';
 import { handle } from '@hono/node-server/vercel';
 import { serveStatic } from '@hono/node-server/serve-static';
