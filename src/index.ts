@@ -3,6 +3,7 @@ import { Hono } from 'hono';
 import { DojoKernel } from './orchestration/DojoKernel.ts';
 import { DreamTask } from './services/DreamTask.ts';
 import { serve } from '@hono/node-server';
+import { handle } from '@hono/node-server/vercel';
 import { serveStatic } from '@hono/node-server/serve-static';
 import { streamText } from 'hono/streaming';
 import { cors } from 'hono/cors';
@@ -13,6 +14,12 @@ const app = new Hono();
 const kernel = new DojoKernel();
 const DATA_DIR = path.join(process.cwd(), 'src/data');
 const dreamTask = new DreamTask(DATA_DIR);
+
+// Vercel Serverless Exports
+export const GET = handle(app);
+export const POST = handle(app);
+export const PUT = handle(app);
+export const DELETE = handle(app);
 
 // Middleware
 app.use('*', cors());
