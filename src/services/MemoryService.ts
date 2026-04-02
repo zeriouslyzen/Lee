@@ -3,7 +3,7 @@ import path from 'node:path';
 
 export interface MemoryEntry {
   timestamp: string;
-  category: 'philosophy' | 'training' | 'bio' | 'metaphysical';
+  category: 'philosophy' | 'training' | 'bio' | 'metaphysical' | 'forensic';
   content: string;
   source?: string;
 }
