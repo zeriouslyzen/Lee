@@ -1,10 +1,19 @@
-import { ForensicAnalyst } from '../services/ForensicAnalyst.js';
-import { Tactician } from './Tactician.js';
-import { Alchemist } from './Alchemist.js';
+import { ForensicAnalyst } from '../services/ForensicAnalyst.ts';
+import { Tactician } from './Tactician.ts';
+import { Alchemist } from './Alchemist.ts';
+import { BrainResponse } from '../services/BrainService.ts';
 
 export interface ResearchInsight {
   topic: string;
   finding: string;
+}
+
+export interface ResearchResult {
+  content: string;
+  pulses: {
+    agent: string;
+    response: BrainResponse;
+  }[];
 }
 
 /**
@@ -25,7 +34,7 @@ export class Coordinator {
   /**
    * Fan-out: Perform multiple specialized research tasks in parallel.
    */
-  async optimizeResearch(userPrompt: string, archiveContext: string): Promise<string> {
+  async optimizeResearch(userPrompt: string, archiveContext: string): Promise<ResearchResult> {
     // 1. Specialized Parallel Researchers (Point 10/2 Optimization)
     const [biomechanics, tactics, alchemy] = await Promise.all([
       this.analyst.analyze(userPrompt, `[BIOMECHANICS FOCUS]\n${archiveContext}`),
@@ -34,21 +43,27 @@ export class Coordinator {
     ]);
 
     // 2. Synthesis (The "Senior Lead" Job)
-    // We combine the multi-dimensional findings into a single 'Forensic Truth'
     const synthesizedTruth = `
 <biomech>
-${biomechanics.trim()}
+${biomechanics.message.content.trim()}
 </biomech>
 
 <tactical>
-${tactics.trim()}
+${tactics.message.content.trim()}
 </tactical>
 
 <alchemical>
-${alchemy.trim()}
+${alchemy.message.content.trim()}
 </alchemical>
 `.trim();
 
-    return synthesizedTruth;
+    return {
+      content: synthesizedTruth,
+      pulses: [
+        { agent: 'Forensic Analyst', response: biomechanics },
+        { agent: 'JKD Tactician', response: tactics },
+        { agent: 'TCM Alchemist', response: alchemy }
+      ]
+    };
   }
 }

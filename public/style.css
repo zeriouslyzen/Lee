@@ -226,18 +226,21 @@ main {
   transition: width 0.5s ease-in-out;
 }
 
-/* Chat Messages */
 #chronos-log {
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
 #chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding-right: 5px;
-  margin-bottom: 15px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 #chat-messages::-webkit-scrollbar {
@@ -400,27 +403,176 @@ button.secondary {
   box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.02);
 }
 
-#thought-content {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
-  font-style: italic;
+/* Neural Pulse Ticker */
+.pulse-ticker {
+  height: 80px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 15px;
   overflow-y: auto;
-  text-shadow: 0 0 5px rgba(255, 215, 0, 0.2);
+  display: flex;
+  flex-direction: column-reverse;
+  font-family: var(--font-header);
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  padding: 8px 12px;
+  mask-image: linear-gradient(to top, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, black 80%, transparent 100%);
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) transparent;
 }
 
-.typing-indicator {
-  padding: 10px;
+.pulse-ticker::-webkit-scrollbar {
+  width: 3px;
+}
+
+.pulse-ticker::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+}
+
+.pulse-line {
+  margin-bottom: 4px;
+  opacity: 1;
+  animation: slidePulse 0.3s ease-out;
+}
+
+@keyframes slidePulse {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.pulse-line.system { color: #888; }
+.pulse-line.agent { color: var(--primary-color); }
+.pulse-line.stats { color: #00ffcc; font-size: 0.55rem; opacity: 0.7; }
+
+/* Side HUD: Brain Duel Monitor */
+.side-hud {
+  position: absolute;
+  right: 20px;
+  top: 180px;
+  width: 180px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 15px;
+  background: rgba(10, 10, 10, 0.9);
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+}
+
+.side-hud h3 {
+  font-family: var(--font-header);
+  font-size: 0.75rem;
+  margin: 0 0 5px 0;
   color: var(--primary-color);
+  letter-spacing: 2px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-row .label {
+  font-size: 0.55rem;
+  color: #888;
+}
+
+.stat-row .value {
   font-family: var(--font-header);
   font-size: 0.7rem;
-  letter-spacing: 2px;
-  opacity: 0.6;
-  animation: pulse 1.5s infinite;
-  display: none;
+  color: #fff;
 }
 
-@keyframes pulse {
-  0% { opacity: 0.3; }
-  50% { opacity: 1; }
-  100% { opacity: 0.3; }
+.provider-indicator {
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.6rem;
+  font-weight: bold;
+  text-align: center;
+  color: var(--primary-color);
+}
+
+/* Master Toggle Switch */
+.neural-controls {
+  margin-top: 15px;
+}
+
+.brain-toggle {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.toggle-label {
+  font-family: var(--font-header);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: #888;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #222;
+  transition: .4s;
+  border: 1px solid var(--border-color);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 3px;
+  background-color: var(--primary-color);
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #333;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #333;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+  background-color: #00ffcc;
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+@media (max-width: 1024px) {
+  .side-hud {
+    display: none; /* Hide on small viewports to avoid clutter */
+  }
 }

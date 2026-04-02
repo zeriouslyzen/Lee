@@ -1,4 +1,4 @@
-import { BrainService } from '../services/BrainService.ts';
+import { BrainService, BrainResponse } from '../services/BrainService.ts';
 
 /**
  * Tactician: The JKD Combat Algorithm
@@ -11,7 +11,7 @@ export class Tactician {
     this.brain = new BrainService();
   }
 
-  async analyze(userPrompt: string, clinicalContext: string): Promise<string> {
+  async analyze(userPrompt: string, clinicalContext: string): Promise<BrainResponse> {
     const systemPrompt = `You are a SIFU-LEVEL JKD TACTICIAN.
     
     TASK: Translate clinical biomechanics into combat strategy.
@@ -27,11 +27,9 @@ export class Tactician {
     YOUR VOICE: Direct, strategic, and martial.
     `;
 
-    const response = await this.brain.chat([
+    return this.brain.chat([
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt }
     ], 'hermes3:8b');
-
-    return response.message.content;
   }
 }

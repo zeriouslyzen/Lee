@@ -19,9 +19,36 @@
                     <div class="legacy-dates">Nov 27, 1940 — July 20, 1973</div>
                 </div>
             </div>
+            <div class="neural-controls">
+                <div class="brain-toggle">
+                    <span class="toggle-label">LOCAL</span>
+                    <label class="switch">
+                        <input type="checkbox" id="neural-provider-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="toggle-label">CLOUD</span>
+                </div>
+            </div>
         </header>
 
         <main>
+            <div id="brain-duel-monitor" class="glass-panel side-hud">
+                <h3>NEURAL DUEL</h3>
+                <div class="stat-row">
+                    <span class="label">LATENCY</span>
+                    <span id="duel-latency" class="value">0ms</span>
+                </div>
+                <div class="stat-row">
+                    <span class="label">CHI (TOKENS)</span>
+                    <span id="duel-tokens" class="value">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="label">COST</span>
+                    <span id="duel-cost" class="value">$0.00</span>
+                </div>
+                <div class="provider-indicator" id="active-provider">OLLAMA ACTIVE</div>
+            </div>
+
             <section id="microscope" class="drawer left">
                 <div class="panel-header">
                     <h2>BIOMECHANICS</h2>
@@ -33,6 +60,9 @@
             </section>
 
             <section id="chronos-log" class="glass-panel">
+                <div id="pulse-ticker" class="pulse-ticker">
+                    <div class="pulse-line system">Neural Swarm Standby...</div>
+                </div>
                 <div id="chat-messages">
                     <div class="message system">
                         <p>Welcome to the Master Hall. Empty your mind. Speak your truth.</p>

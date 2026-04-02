@@ -1,4 +1,4 @@
-import { BrainService } from './BrainService.ts';
+import { BrainService, BrainResponse } from './BrainService.ts';
 
 export class ForensicAnalyst {
   private brain: BrainService;
@@ -7,7 +7,7 @@ export class ForensicAnalyst {
     this.brain = new BrainService();
   }
 
-  async analyze(userPrompt: string, archiveContext: string): Promise<string> {
+  async analyze(userPrompt: string, archiveContext: string): Promise<BrainResponse> {
     const systemPrompt = `You are a HIGH-LEVEL FORENSIC ANALYST & SPORTS SCIENTIST for katanx.com.
     
     TASK: Deconstruct the user's input with clinical precision.
@@ -29,7 +29,6 @@ export class ForensicAnalyst {
       { role: 'user', content: userPrompt }
     ];
 
-    const response = await this.brain.chat(messages, 'hermes3:8b');
-    return response.message.content;
+    return this.brain.chat(messages, 'hermes3:8b');
   }
 }

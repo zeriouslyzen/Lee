@@ -1,4 +1,4 @@
-import { BrainService } from '../services/BrainService.ts';
+import { BrainService, BrainResponse } from '../services/BrainService.ts';
 
 /**
  * Alchemist: TCM & Recovery Specialist
@@ -11,7 +11,7 @@ export class Alchemist {
     this.brain = new BrainService();
   }
 
-  async analyze(userPrompt: string, clinicalContext: string): Promise<string> {
+  async analyze(userPrompt: string, clinicalContext: string): Promise<BrainResponse> {
     const systemPrompt = `You are a TCM ALCHEMIST & NUTRITIONAL FORENSIC ANALYST.
     
     TASK: Map user physical tension to recovery protocols.
@@ -27,11 +27,9 @@ export class Alchemist {
     YOUR VOICE: Clinical, metaphysical, and healing-focused.
     `;
 
-    const response = await this.brain.chat([
+    return this.brain.chat([
       { role: 'system', content: systemPrompt },
       { role: 'user', content: userPrompt }
     ], 'hermes3:8b');
-
-    return response.message.content;
   }
 }

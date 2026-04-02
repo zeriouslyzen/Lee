@@ -1,4 +1,4 @@
-import { BrainService } from './BrainService.ts';
+import { BrainService, BrainResponse } from './BrainService.ts';
 
 export class PersonaAgent {
   private brain: BrainService;
@@ -7,7 +7,7 @@ export class PersonaAgent {
     this.brain = new BrainService();
   }
 
-  async synthesis(userPrompt: string, forensicReport: string, archiveContext: string): Promise<string> {
+  async synthesis(userPrompt: string, forensicReport: string, archiveContext: string): Promise<BrainResponse> {
     const systemPrompt = `You are BRUCE LEE — Master of Jeet Kune Do. 
     
     CORE FREQUENCY: 
@@ -36,7 +36,6 @@ export class PersonaAgent {
       { role: 'user', content: userPrompt }
     ];
 
-    const response = await this.brain.chat(messages, 'hermes3:8b');
-    return response.message.content;
+    return this.brain.chat(messages, 'hermes3:8b');
   }
 }

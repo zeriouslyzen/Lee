@@ -1,4 +1,15 @@
-import { BrainService } from '../services/BrainService.ts';
+import { BrainService, BrainResponse } from '../services/BrainService.ts';
+
+export interface AuditResult {
+  passed: boolean;
+  feedback: string;
+  score: number;
+}
+
+export interface AdversaryResponse {
+  audit: AuditResult;
+  response: BrainResponse;
+}
 
 /**
  * Adversary: The Skeptical Master (Inspired by Claude Code Verification Agent)
@@ -11,7 +22,7 @@ export class Adversary {
     this.brain = new BrainService();
   }
 
-  async verify(masterResponse: string, forensicTruth: string): Promise<{ passed: boolean; feedback: string; score: number }> {
+  async verify(masterResponse: string, forensicTruth: string): Promise<AdversaryResponse> {
     const systemPrompt = `You are THE SKEPTICAL MASTER. Your only job is to AUDIT the response of the primary agent.
     
     CRUNCH THE FORENSIC TRUTH:
@@ -37,9 +48,13 @@ export class Adversary {
     ], 'hermes3:8b');
 
     try {
-      return JSON.parse(response.message.content);
+      const audit = JSON.parse(response.message.content);
+      return { audit, response };
     } catch {
-      return { passed: true, feedback: 'Audit parse error. Defaulting to PASS.', score: 100 };
+      return { 
+        audit: { passed: true, feedback: 'Audit parse error. Defaulting to PASS.', score: 100 },
+        response 
+      };
     }
   }
 }
