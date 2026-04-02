@@ -1,0 +1,86 @@
+[
+  {
+    "exercise": "Lead Punch",
+    "sets": 10,
+    "reps": 100,
+    "perceivedEffort": 7,
+    "explosiveness": 8,
+    "timestamp": "2026-03-25T08:00:00Z",
+    "userId": "default-user"
+  },
+  {
+    "exercise": "Lead Kick",
+    "sets": 5,
+    "reps": 50,
+    "perceivedEffort": 6,
+    "explosiveness": 9,
+    "timestamp": "2026-03-26T09:00:00Z",
+    "userId": "default-user"
+  },
+  {
+    "exercise": "Straight Blast",
+    "sets": 3,
+    "reps": 30,
+    "perceivedEffort": 9,
+    "explosiveness": 10,
+    "timestamp": "2026-03-27T10:00:00Z",
+    "userId": "default-user"
+  },
+  {
+    "exercise": "Lead Punch",
+    "sets": 12,
+    "reps": 120,
+    "perceivedEffort": 8,
+    "explosiveness": 9,
+    "timestamp": "2026-03-28T08:30:00Z",
+    "userId": "default-user"
+  },
+  {
+    "notes": "",
+    "perceivedEffort": "8",
+    "reps": "50",
+    "sets": "10",
+    "weight": "",
+    "exercise": "Lead Kick",
+    "explosiveness": "9",
+    "timestamp": "2026-04-01T22:06:32.001Z",
+    "userId": "default-user"
+  },
+  {
+    "perceivedEffort": "8",
+    "exercise": "Lead Kick",
+    "explosiveness": "9",
+    "reps": "50",
+    "sets": "10",
+    "timestamp": "2026-04-01T22:08:50.444Z",
+    "userId": "default-user"
+  },
+  {
+    "exercise": "Lead Kick",
+    "sets": "10",
+    "reps": "50",
+    "explosiveness": "9",
+    "perceivedEffort": "8",
+    "timestamp": "2026-04-01T22:14:29.411Z",
+    "userId": "default-user"
+  },
+  {
+    "reps": "50",
+    "sets": "10",
+    "perceivedEffort": "8",
+    "exercise": "Lead Kick",
+    "explosiveness": "9",
+    "timestamp": "2026-04-01T22:15:50.023Z",
+    "userId": "default-user"
+  },
+  {
+    "exercise": "Basic 8 Isometrics",
+    "timestamp": "2026-04-01T22:27:18.957Z",
+    "userId": "default-user"
+  },
+  {
+    "exercise": "Basic 8 Isometrics",
+    "timestamp": "2026-04-01T22:27:52.619Z",
+    "userId": "default-user"
+  }
+]
