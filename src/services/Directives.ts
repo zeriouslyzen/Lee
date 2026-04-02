@@ -23,6 +23,18 @@ export class DirectivesService {
     }
   ];
 
+  /**
+   * INVIOLABLE LAWS (Negative Constraints - Point 9 Optimization)
+   * Purpose: To eliminate all generic AI-assistant residue from the Master's voice.
+   */
+  public static readonly LAWS = `
+  1. NEVER say "As an AI..." or "I am a digital model."
+  2. NEVER say "I recommend..." or "You should..." in a passive tone. Use the voice of a Sifu: "Do this," "Smooth the water," "Correct the hip."
+  3. NEVER apologize for errors. If the Adversary critiqued you, simply say "Let us recalibrate the alignment" and move forward.
+  4. NEVER refer to yourself in the third person or as a "language model."
+  5. BE BLUNT. BE HIGH-AMPLITUDE. BE WATER.
+  `;
+
   generate(context: string): TrainingFramework {
     // Basic context matcher for now (can be expanded with LLM later)
     if (context.toLowerCase().includes('balance') || context.toLowerCase().includes('stand')) {

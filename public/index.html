@@ -14,28 +14,21 @@
         <header>
             <div class="logo">
                 <span class="symbol">🐉</span>
-                <h1>THE MASTER HALL</h1>
-            </div>
-            <div class="vitals">
-                <div class="vital-item" id="cns-status">
-                    <span class="label">CNS</span>
-                    <div class="bar-container"><div class="bar" style="width: 85%;"></div></div>
-                </div>
-                <div class="vital-item" id="chi-status">
-                    <span class="label">CHI</span>
-                    <div class="bar-container"><div class="bar" style="width: 70%;"></div></div>
+                <div class="titles">
+                    <h1>THE MASTER HALL</h1>
+                    <div class="legacy-dates">Nov 27, 1940 — July 20, 1973</div>
                 </div>
             </div>
         </header>
 
         <main>
-            <section id="microscope" class="glass-panel">
+            <section id="microscope" class="drawer left">
                 <div class="panel-header">
-                    <h2>FORENSIC MICROSCOPE</h2>
-                    <span class="status-dot pulse"></span>
+                    <h2>BIOMECHANICS</h2>
+                    <span class="close-btn" onclick="toggleDrawer('left')">×</span>
                 </div>
-                <div id="thought-content" class="content">
-                    <p class="placeholder">Awaiting neural deconstruction...</p>
+                <div id="biomech-content" class="content scroll">
+                    <p class="placeholder">Awaiting physical deconstruction...</p>
                 </div>
             </section>
 
@@ -46,24 +39,47 @@
                     </div>
                 </div>
                 <div id="typing-indicator" class="typing-indicator">THE MASTER IS REFLECTING...</div>
+                
+                <div id="hud-controls" class="glass-hud">
+                    <div class="vital-item" id="cns-status" onclick="toggleDrawer('left')">
+                        <span class="label">PHY</span>
+                        <div class="bar-container"><div class="bar" style="width: 85%;"></div></div>
+                    </div>
+                    <div class="vital-item" id="chi-status" onclick="toggleDrawer('bottom')">
+                        <span class="label">ALC</span>
+                        <div class="bar-container"><div class="bar" style="width: 70%;"></div></div>
+                    </div>
+                    <div class="vital-item" id="tac-status" onclick="toggleDrawer('right')">
+                        <span class="label">TAC</span>
+                        <div class="bar-container"><div class="bar" style="width: 90%;"></div></div>
+                    </div>
+                </div>
+
                 <div class="input-area">
                     <textarea id="user-input" placeholder="Enter the dragon..." autofocus></textarea>
                     <button id="send-btn">TRANSMIT</button>
                 </div>
             </section>
 
-            <aside id="expansion-zone" class="glass-panel">
+            <aside id="expansion-zone" class="drawer right">
                 <div class="panel-header">
-                    <h2>DIRECTIVES</h2>
+                    <h2>TACTICAL HUB</h2>
+                    <span class="close-btn" onclick="toggleDrawer('right')">×</span>
                 </div>
-                <div id="directive-content" class="content">
-                    <div class="directive-box">
-                        <h3>NO WAY AS WAY</h3>
-                        <p>Your journey begins with the first strike. Maintain awareness.</p>
-                    </div>
+                <div id="tactical-content" class="content scroll">
+                    <p class="placeholder">Awaiting combat strategies...</p>
                 </div>
-                <button id="dream-btn" class="secondary">CONSOLIDATE MEMORY</button>
             </aside>
+
+            <section id="alchemical-lab" class="drawer bottom">
+                <div class="panel-header">
+                    <h2>ALCHEMICAL LAB</h2>
+                    <span class="close-btn" onclick="toggleDrawer('bottom')">×</span>
+                </div>
+                <div id="alchemical-content" class="content scroll">
+                    <p class="placeholder">Awaiting recovery protocols...</p>
+                </div>
+            </section>
         </main>
 
         <footer>

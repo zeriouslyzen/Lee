@@ -28,24 +28,28 @@ export class DreamTask {
 
     if (logs.length === 0) return;
 
-    // Use Ollama to "dream" (summarize/extract insights) over the logs
-    const logSummary = JSON.stringify(logs.slice(-20)); // Last 20 logs
-    const prompt = `You are performing a "Dream Consolidation" as the Bruce Lee AI. 
-    Analyze these training logs and extract 1-2 profound philosophical or physical insights into the user's progress.
-    Speak with intense, forensic precision.
-    
-    Logs: ${logSummary}`;
+    // Use Ollama to "dream" (extract axioms) over the logs
+    const logSummary = JSON.stringify(logs.slice(-30)); // Last 30 logs for deeper context
+    const prompt = `
+[DREAM CONSOLIDATION: AXIOM EXTRACTION]
+Identify Permanent Physical/Mental Patterns (Axioms) from these logs.
+Filter out the "fluff." Extract only the distilled forensic truths that must survive.
+
+Logs: ${logSummary}
+
+OUTPUT FORMAT:
+### [YYYY-MM-DD] AXIOM
+Forensic Insight: {The distilled truth about the user's body/mind}
+Alignment: {The JKD/TCM principle involved}
+`;
 
     const response = await this.ollama.chat([{ role: 'user', content: prompt }], 'hermes3:8b');
     const insight = response.message.content;
 
-    await this.memory.addMemory({
-      timestamp: new Date().toISOString(),
-      category: 'training',
-      content: `Consolidated Insight: ${insight}`,
-      source: 'DreamTask'
-    });
+    // Append to BRUCE.md for the Kernel to hydrate in the next session
+    const axiomPath = path.join(this.dataDir, 'BRUCE.md');
+    await fs.appendFile(axiomPath, `\n---\n${insight.trim()}\n`, 'utf8');
 
-    console.log('DreamTask consolidation complete.');
+    console.log('DreamTask Axiom Compression complete.');
   }
 }

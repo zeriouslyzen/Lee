@@ -1,24 +1,42 @@
 const chatMessages = document.getElementById('chat-messages');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
-const thoughtContent = document.getElementById('thought-content');
 const typingIndicator = document.getElementById('typing-indicator');
-const cnsBar = document.querySelector('#cns-status .bar');
-const chiBar = document.querySelector('#chi-status .bar');
+
+// Drawers
+const drawerContents = {
+    left: document.getElementById('biomech-content'),
+    right: document.getElementById('tactical-content'),
+    bottom: document.getElementById('alchemical-content')
+};
+
+const vitals = {
+    phy: document.querySelector('#cns-status .bar'),
+    alc: document.querySelector('#chi-status .bar'),
+    tac: document.querySelector('#tac-status .bar')
+};
 
 let messageHistory = [];
+
+/**
+ * Toggle Drawer: Kinetic Sliding Mechanism
+ */
+window.toggleDrawer = function(side) {
+    const selector = side === 'left' ? '#microscope' : 
+                     side === 'right' ? '#expansion-zone' : 
+                     '#alchemical-lab';
+    const drawer = document.querySelector(selector);
+    drawer.classList.toggle('open');
+};
 
 async function sendMessage() {
     const text = userInput.value.trim();
     if (!text) return;
 
-    // Add user message to UI
     appendMessage('user', text);
     userInput.value = '';
     messageHistory.push({ role: 'user', content: text });
 
-    // Loading state
-    thoughtContent.innerHTML = '<p class="pulse">Deconstructing neural patterns...</p>';
     typingIndicator.style.display = 'block';
 
     try {
@@ -30,9 +48,8 @@ async function sendMessage() {
 
         const data = await response.json();
         const rawContent = data.choices[0].message.content;
-        messageHistory.push({ role: 'assistant', content: rawContent });
-
-        parseAndDisplay(rawContent);
+        
+        parseAndRouteSignals(rawContent);
     } catch (error) {
         console.error('Transmission error:', error);
         appendMessage('system', 'Neural link severed. Connectivity error.');
@@ -41,42 +58,44 @@ async function sendMessage() {
     }
 }
 
-function parseAndDisplay(rawContent) {
-    // 1. Separate the Agents
-    const forensicMatch = rawContent.match(/<forensic>([\s\S]*?)<\/forensic>/i);
-    let personaResponse = rawContent.replace(/<forensic>[\s\S]*?<\/forensic>/i, '').trim();
-
-    if (forensicMatch) {
-       const forensicText = forensicMatch[1].trim();
-       thoughtContent.innerHTML = `<p><strong>FORENSIC MICROSCOPE:</strong><br>${forensicText.replace(/\n/g, '<br>')}</p>`;
-       thoughtContent.scrollTop = 0;
-
-       // Reactive Vitals Logic (Demo Ready)
-       updateVitals(forensicText);
+/**
+ * Signal Multi-Plexing: Routing XML to Drawers
+ */
+function parseAndRouteSignals(rawContent) {
+    // 1. Extract Soul (Master Response)
+    const soulMatch = rawContent.match(/<soul>([\s\S]*?)<\/soul>/i);
+    if (soulMatch) {
+        appendMessage('assistant', soulMatch[1].trim());
     }
 
-    // 2. Add Persona Response (Agent B - The Soul) to Chat
-    if (personaResponse) {
-        appendMessage('assistant', personaResponse);
+    // 2. Extract Signals (Forensic Deep Scans)
+    const biomechMatch = rawContent.match(/<biomech>([\s\S]*?)<\/biomech>/i);
+    const tacticalMatch = rawContent.match(/<tactical>([\s\S]*?)<\/tactical>/i);
+    const alchemicalMatch = rawContent.match(/<alchemical>([\s\S]*?)<\/alchemical>/i);
+
+    if (biomechMatch) {
+        updateDrawer('left', 'biomech-content', biomechMatch[1].trim(), 'phy');
+    }
+    if (tacticalMatch) {
+        updateDrawer('right', 'tactical-content', tacticalMatch[1].trim(), 'tac');
+    }
+    if (alchemicalMatch) {
+        updateDrawer('bottom', 'alchemical-content', alchemicalMatch[1].trim(), 'alc');
     }
 }
 
-function updateVitals(forensicText) {
-    // Dynamic bars based on keywords in the analyst's report
-    let cns = 85; 
-    let chi = 70;
+function updateDrawer(side, contentId, text, vitalKey) {
+    const el = document.getElementById(contentId);
+    el.innerHTML = `<div class="scan-result">${text.replace(/\n/g, '<br>')}</div>`;
+    
+    // Nudge visual (Pulse the vital header)
+    const vital = document.getElementById(`${vitalKey === 'phy' ? 'cns' : vitalKey === 'alc' ? 'chi' : 'tac'}-status`);
+    vital.classList.add('pulse');
+    setTimeout(() => vital.classList.remove('pulse'), 3000);
 
-    if (forensicText.toLowerCase().includes('tension') || forensicText.toLowerCase().includes('stiff')) cns -= 20;
-    if (forensicText.toLowerCase().includes('efficiency') || forensicText.toLowerCase().includes('fluid')) cns += 10;
-    if (forensicText.toLowerCase().includes('blockage') || forensicText.toLowerCase().includes('imbalance')) chi -= 15;
-    if (forensicText.toLowerCase().includes('alignment') || forensicText.toLowerCase().includes('center')) chi += 15;
-
-    // Clamp values
-    cns = Math.max(10, Math.min(100, cns));
-    chi = Math.max(10, Math.min(100, chi));
-
-    cnsBar.style.width = `${cns}%`;
-    chiBar.style.width = `${chi}%`;
+    // Update Bars based on content density
+    const score = Math.min(100, Math.max(20, text.length / 10)); // Simple density heuristic for pilot
+    vitals[vitalKey].style.width = `${score}%`;
 }
 
 function appendMessage(role, text) {
