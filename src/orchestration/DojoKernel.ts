@@ -9,6 +9,7 @@ import { SkillRegistry } from './SkillRegistry.js';
 import { CostTracker } from './CostTracker.js';
 import { DirectivesService } from '../services/Directives.js';
 import { KnowledgeService } from '../services/KnowledgeService.js';
+import { AuditLogger, AuditRecord } from '../services/AuditLogger.js';
 import path from 'node:path';
 
 export interface Pulse {
@@ -31,6 +32,7 @@ export class DojoKernel {
   private pasteStore: PasteStore;
   private skills: SkillRegistry;
   private costTracker: CostTracker;
+  private auditLogger: AuditLogger;
   private dataDir: string;
 
   private static CACHE_BOUNDARY = '[SYSTEM_PROMPT_DYNAMIC_BOUNDARY]';
@@ -46,9 +48,11 @@ export class DojoKernel {
     this.pasteStore = new PasteStore(this.dataDir);
     this.skills = new SkillRegistry();
     this.costTracker = new CostTracker();
+    this.auditLogger = new AuditLogger(this.dataDir);
   }
 
   async submitMessage(userPrompt: string, onPulse?: (pulse: Pulse) => void): Promise<string> {
+    const startTime = Date.now();
     const skill = this.skills.parse(userPrompt);
     if (skill) return await skill.execute(userPrompt);
 
@@ -98,28 +102,50 @@ export class DojoKernel {
     onPulse?.({ agent: 'Skeptical Master', message: `Audit: ${adversaryResult.audit.passed ? 'PASSED' : 'RETRYING'} (Purity Score: ${adversaryResult.audit.score})`, stats: adversaryResult.response.stats });
 
     // 4. Adaptive Reflection (Healing)
-    let finalMasterResponse = masterResponse.message.content;
+    const finalTimestamp = new Date().toISOString();
+    const finalMasterResponse = masterResponse.message.content;
+    let finalPayload = finalMasterResponse;
+    let retryCount = 0;
+
     if (!adversaryResult.audit.passed) {
+      retryCount = 1;
       onPulse?.({ agent: 'Dojo Kernel', message: 'Shadow Reflection: Repurifying the frequency...' });
       const retryResponse = await this.persona.synthesis(
         `RETRY: The Skeptical Master criticized your previous response.\nCRITIQUE: ${adversaryResult.audit.feedback}`, 
         researchResult.content, 
         fullScienceContext
       );
-      finalMasterResponse = retryResponse.message.content;
+      finalPayload = retryResponse.message.content;
       onPulse?.({ agent: 'Persona Agent', message: 'The Master is Ready.', stats: retryResponse.stats });
     }
 
     onPulse?.({ agent: 'Dojo Kernel', message: 'Finalizing Neural Link Transmission...' });
 
-    // 5. Final Assembly for UI
+    // 5. MASTER AUDIT PERSISTENCE
+    const totalLatencyMs = Date.now() - startTime;
+    await this.auditLogger.log({
+      timestamp: finalTimestamp,
+      prompt: userPrompt,
+      analystReport: researchResult.content,
+      soulResponse: masterResponse.message.content,
+      finalResponse: finalPayload,
+      audit: adversaryResult.audit,
+      metrics: {
+        totalLatencyMs,
+        tokens: masterResponse.stats.tokens + (adversaryResult.response.stats?.tokens || 0),
+        provider: masterResponse.stats.provider,
+        retryCount
+      }
+    });
+
+    // 6. Final Assembly for UI
     return `
 <signals>
 ${researchResult.content}
 </signals>
 
 <soul>
-${finalMasterResponse}
+${finalPayload}
 </soul>
 `.trim();
   }

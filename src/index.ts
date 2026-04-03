@@ -48,7 +48,7 @@ app.post('/v1/chat', async (c) => {
       // 1. Brain Rerouting (Neural Pulse)
       const response = await kernel.submitMessage(lastMessage, (pulse) => {
         stream.write(`PULSE:${JSON.stringify(pulse)}\n`);
-      });
+      }, provider);
 
       // 2. Final Synthesis (The Soul)
       stream.write(`FINAL:${response}\n`);
