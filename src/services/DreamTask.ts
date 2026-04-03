@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { BrainService } from './BrainService.ts';
-import { MemoryService } from './MemoryService.ts';
+import { BrainService } from './BrainService.js';
+import { MemoryService } from './MemoryService.js';
 
 export class DreamTask {
   private brain: BrainService;

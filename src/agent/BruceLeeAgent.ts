@@ -1,7 +1,7 @@
-import { MemoryService } from '../services/MemoryService.ts';
-import { KnowledgeService, KnowledgeNugget } from '../services/KnowledgeService.ts';
-import { ForensicAnalyst } from '../services/ForensicAnalyst.ts';
-import { PersonaAgent } from '../services/PersonaAgent.ts';
+import { MemoryService } from '../services/MemoryService.js';
+import { KnowledgeService, KnowledgeNugget } from '../services/KnowledgeService.js';
+import { ForensicAnalyst } from '../services/ForensicAnalyst.js';
+import { PersonaAgent } from '../services/PersonaAgent.js';
 import path from 'node:path';
 
 export class BruceLeeAgent {

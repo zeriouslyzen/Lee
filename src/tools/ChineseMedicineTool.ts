@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BaseTool, ToolContext, ToolResult } from './BaseTool.ts';
+import { BaseTool, ToolContext, ToolResult } from './BaseTool.js';
 
 const TCMInputSchema = z.object({
   symptom: z.string().describe('The physical or energetic symptom (e.g., muscle soreness, low energy, joint pain)'),

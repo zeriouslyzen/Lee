@@ -1,4 +1,4 @@
-import { BruceLeeAgent } from './agent/BruceLeeAgent.ts';
+import { BruceLeeAgent } from './agent/BruceLeeAgent.js';
 
 async function test() {
   const agent = new BruceLeeAgent();

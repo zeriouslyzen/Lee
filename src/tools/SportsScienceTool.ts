@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BaseTool, ToolContext, ToolResult } from './BaseTool.ts';
+import { BaseTool, ToolContext, ToolResult } from './BaseTool.js';
 
 const SportsSciInputSchema = z.object({
   topic: z.string().describe('The biomechanical or physiological concept to analyze (e.g., leverage, kinetic linking)'),

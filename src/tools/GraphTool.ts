@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { BaseTool, ToolContext, ToolResult } from './BaseTool.ts';
+import { BaseTool, ToolContext, ToolResult } from './BaseTool.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
